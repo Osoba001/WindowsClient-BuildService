@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oBLvHvNugiz86XnBJR+ULbF6scV3XIgUB+4PySJY2PYE9cAtkNqdbsiKOtkg6qDYddOedX0TqOaZ9cJEmSSAxw==",
+  "dgSpecHash": "8dQboQeE48ADPFMEhOI92iuSyMHE8TIpGfXkmb1LAVJSWxiHKcmRX7KmEJ5UdFOojZGHVJdfb+fOpQ4AgaP26A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
+  "projectFilePath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kelly.osoba\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\kelly.osoba\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",

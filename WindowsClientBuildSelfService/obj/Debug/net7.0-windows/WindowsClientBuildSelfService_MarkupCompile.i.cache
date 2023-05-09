@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\kelly.osoba\source\repos\WindowsClientBuildSelfService\WindowsClientBuildSelfService\obj\Debug\net7.0-windows\
+C:\Users\kelly.osoba\Desktop\APPs\CCLSelfService\WindowsClient-BuildService\WindowsClientBuildSelfService\obj\Debug\net7.0-windows\
 WindowsClientBuildSelfService
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-C:\Users\kelly.osoba\source\repos\WindowsClientBuildSelfService\WindowsClientBuildSelfService\App.xaml
+C:\Users\kelly.osoba\Desktop\APPs\CCLSelfService\WindowsClient-BuildService\WindowsClientBuildSelfService\App.xaml
 1-893921402
 
 171215331762
 2061942652496
 Main\StartupWindowsView.xaml;
 
-True
+False
 

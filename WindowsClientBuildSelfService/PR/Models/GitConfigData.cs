@@ -16,6 +16,7 @@ namespace WindowsClientBuildSelfService.PR.Models
             RepoBaseUri = "https://api.github.com/repos/";
             AccessToken =Unprotect("accessToken");
             Owner = "Osoba001";
+            ApiVersion = "";
         }
         public string Owner { get; private set; }
         public string RepoBaseUri { get; private set; }

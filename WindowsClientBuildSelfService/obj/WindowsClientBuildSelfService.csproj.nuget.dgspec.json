@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {}
+    "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
+    "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
+        "projectUniqueName": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
         "projectName": "WindowsClientBuildSelfService",
-        "projectPath": "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
+        "projectPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
         "packagesPath": "C:\\Users\\kelly.osoba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kelly.osoba\\source\\repos\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService\\obj\\",
+        "outputPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kelly.osoba\\AppData\\Roaming\\NuGet\\NuGet.Config",
