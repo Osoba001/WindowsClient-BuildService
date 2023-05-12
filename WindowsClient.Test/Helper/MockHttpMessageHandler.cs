@@ -40,7 +40,7 @@ namespace WindowsClient.Test.Helper
             var mockHttpHandler = new Mock<HttpMessageHandler>();
             mockHttpHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .ThrowsAsync(new HttpRequestException(NoInternetErrorMessage));
+                .ThrowsAsync(new HttpRequestException());
 
             return new HttpClient(mockHttpHandler.Object);
 
