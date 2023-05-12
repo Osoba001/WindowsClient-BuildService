@@ -13,29 +13,7 @@ namespace WindowsClient.Test.Helper
 {
     internal static class MockHttpMessageHandler
     {
-        internal static Mock<HttpMessageHandler> SetupGetResource1<T>(T expectedResponse,HttpStatusCode statusCode =HttpStatusCode.OK)
-        {
-            var mockHttpResponse = new HttpResponseMessage(statusCode)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(expectedResponse))
-            };
-
-            mockHttpResponse.Content.Headers.ContentType= new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var handlerMock= new Mock<HttpMessageHandler>();
-            var httpRequestMsg = new HttpRequestMessage()
-            {
-                
-                RequestUri = new Uri("https://jsonplaceholder.typicode.com/users"),
-                Method = HttpMethod.Get,
-            };
-            handlerMock.Protected()
-                .Setup<Task<HttpResponseMessage>>(
-                    "SendAsync",
-                    httpRequestMsg,
-                    ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(mockHttpResponse);
-            return handlerMock;
-        }
+        
         internal static Mock<HttpMessageHandler> SetupGetResource<T>(T expectedResponse,HttpStatusCode statusCode =HttpStatusCode.OK)
         {
             var mockHttpResponse = new HttpResponseMessage(statusCode)
@@ -54,6 +32,18 @@ namespace WindowsClient.Test.Helper
                 .ReturnsAsync(mockHttpResponse);
 
             return handlerMock;
+        }
+
+       
+        internal static HttpClient SetupHttpResponseForNetworkFailure()
+        {
+            var mockHttpHandler = new Mock<HttpMessageHandler>();
+            mockHttpHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ThrowsAsync(new HttpRequestException(NoInternetErrorMessage));
+
+            return new HttpClient(mockHttpHandler.Object);
+
         }
     }
 }

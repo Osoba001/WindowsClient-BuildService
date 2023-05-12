@@ -25,10 +25,11 @@ namespace WindowsClientBuildSelfService.PR.Models
 
         private static string Unprotect(string key)
         {
-            string protectedData = ConfigurationManager.AppSettings[key];
-            byte[] data = Convert.FromBase64String(protectedData);
-            byte[] entropy = Encoding.ASCII.GetBytes(Assembly.GetExecutingAssembly().FullName);
-            return Encoding.ASCII.GetString(ProtectedData.Unprotect(data, entropy, DataProtectionScope.CurrentUser));
+            return "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";
+            //string protectedData = ConfigurationManager.AppSettings[key];
+            //byte[] data = Convert.FromBase64String(protectedData);
+            //byte[] entropy = Encoding.ASCII.GetBytes(Assembly.GetExecutingAssembly().FullName);
+            //return Encoding.ASCII.GetString(ProtectedData.Unprotect(data, entropy, DataProtectionScope.CurrentUser));
         }
 
         

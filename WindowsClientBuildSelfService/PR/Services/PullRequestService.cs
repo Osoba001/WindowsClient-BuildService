@@ -33,14 +33,23 @@ namespace WindowsClientBuildSelfService.PR.Services
         public async Task<ActionResult> DownloadRelease(string downloadUrl)
         {
             var result = new ActionResult();
-            var resp = await _httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
-            if (resp.IsSuccessStatusCode)
+            try
             {
-                result.Data = resp.Content;
+                var resp = await _httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
+                if (resp.IsSuccessStatusCode)
+                {
+                    result.Data = resp.Content;
+                }
+                else
+                    result.AddError(resp.ReasonPhrase ?? "");
+                return result;
             }
-            else
-                result.AddError(resp.ReasonPhrase ?? "");
-            return result;
+            catch (HttpRequestException)
+            {
+                result.AddError(NoInternetErrorMessage);
+                return result;
+            }
+
         }
 
         /// <summary>
@@ -50,22 +59,33 @@ namespace WindowsClientBuildSelfService.PR.Services
         /// <returns>An ActionResult object containing a list of PullRequest objects if the retrieval was successful, or an error message if the retrieval failed.</returns>
         public async Task<ActionResult> GetPullRequests(string repoName)
         {
-            var resp = await _httpClient.GetAsync($"{repoName}/pulls?state=open");
             var result = new ActionResult();
-            if (!resp.IsSuccessStatusCode)
+            try
             {
-                result.AddError(resp.ReasonPhrase ?? "");
-                return result;
-            }
-            var pullRequests = await resp.Content.ReadFromJsonAsync<List<PullRequestResponse>>();
-            if (pullRequests == null)
-            {
-                result.AddError("Null response");
-                return result;
-            }
+                var resp = await _httpClient.GetAsync($"{repoName}/pulls?state=open");
+                if (!resp.IsSuccessStatusCode)
+                {
+                    result.AddError(resp.ReasonPhrase ?? "");
+                    return result;
+                }
+                var pullRequests = await resp.Content.ReadFromJsonAsync<List<PullRequestResponse>>();
+                if (pullRequests == null)
+                {
+                    result.AddError("Null response");
+                    return result;
+                }
 
-            pullRequests = pullRequests.OrderByDescending(x => x.created_at).ToList();
-            return await AddDownloadUrl(repoName, ConverPRsResponseToModel(pullRequests));
+                pullRequests = pullRequests.OrderByDescending(x => x.created_at).ToList();
+                return await AddDownloadUrl(repoName, ConverPRsResponseToModel(pullRequests));
+            }
+            catch (HttpRequestException)
+            {
+                result.AddError(NoInternetErrorMessage);
+                return result;
+            }
+            
+
+
         }
 
         /// <summary>
@@ -91,7 +111,8 @@ namespace WindowsClientBuildSelfService.PR.Services
             }
             prs.ForEach(pr =>
             {
-                var asset = releases.Where(r => r.tag_name == $@"refs/pull/{pr.Number}/merge").FirstOrDefault()?.assets.FirstOrDefault();
+               // var asset = releases.Where(r => r.tag_name == $@"refs/pull/{pr.Number}/merge").FirstOrDefault()?.assets.FirstOrDefault();
+                var asset = releases.Where(r => r.tag_name == $@"pr-{pr.Number}").FirstOrDefault()?.assets.FirstOrDefault();
                 pr.Release.DownloadReleaseUrl = asset?.browser_download_url;
                 pr.Status = pr.Release.DownloadReleaseUrl != null ? "Approved" : "Pending";
                 pr.Name = repoName;

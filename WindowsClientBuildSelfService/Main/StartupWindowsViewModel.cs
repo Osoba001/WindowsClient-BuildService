@@ -30,7 +30,7 @@ namespace WindowsClientBuildSelfService.Main
         /// </summary>
         private async void LatestPullRequest()
         {
-            var result = await pullRequestService.GetPullRequests("SEPAL-3.0");
+            var result = await pullRequestService.GetPullRequests("SMBS");
             if (result.IsSuccess)
             {
                 PullRequest = new ObservableCollection<PullRequest>((result.Data as List<PullRequest>)!);
