@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 using WindowsClientBuildSelfService.PR.Models;
 using WindowsClientBuildSelfService.PR.Response;
@@ -76,16 +74,13 @@ namespace WindowsClientBuildSelfService.PR.Services
                 }
 
                 pullRequests = pullRequests.OrderByDescending(x => x.created_at).ToList();
-                return await AddDownloadUrl(repoName, ConverPRsResponseToModel(pullRequests));
+                return await AppendDownloadUrl(repoName, ConverPRsResponseToModel(pullRequests));
             }
             catch (HttpRequestException)
             {
                 result.AddError(NoInternetErrorMessage);
                 return result;
             }
-            
-
-
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace WindowsClientBuildSelfService.PR.Services
         /// <param name="repoName">The name of the repository for which to retrieve releases.</param>
         /// <param name="prs">The list of PullRequest objects to update.</param>
         /// <returns>An ActionResult object containing the updated list of PullRequest objects.</returns>
-        private async Task<ActionResult> AddDownloadUrl(string repoName, List<PullRequest> prs)
+        internal async Task<ActionResult> AppendDownloadUrl(string repoName, List<PullRequest> prs)
         {
             var result = new ActionResult();
             var resp = await _httpClient.GetAsync($"{repoName}/releases");
@@ -111,7 +106,6 @@ namespace WindowsClientBuildSelfService.PR.Services
             }
             prs.ForEach(pr =>
             {
-               // var asset = releases.Where(r => r.tag_name == $@"refs/pull/{pr.Number}/merge").FirstOrDefault()?.assets.FirstOrDefault();
                 var asset = releases.Where(r => r.tag_name == $@"pr-{pr.Number}").FirstOrDefault()?.assets.FirstOrDefault();
                 pr.Release.DownloadReleaseUrl = asset?.browser_download_url;
                 pr.Status = pr.Release.DownloadReleaseUrl != null ? "Approved" : "Pending";

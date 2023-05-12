@@ -45,5 +45,26 @@ namespace WindowsClient.Test.Helper
             return new HttpClient(mockHttpHandler.Object);
 
         }
+
+        internal static Mock<HttpMessageHandler> SetupGetResourceForFailSuccessStatusCode(HttpStatusCode statusCode,string reasonPhrase)
+        {
+            var mockHttpResponse = new HttpResponseMessage(statusCode)
+            {
+                Content = new StringContent(""),
+                ReasonPhrase = reasonPhrase,
+                
+            };
+            mockHttpResponse.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var handlerMock = new Mock<HttpMessageHandler>();
+
+            handlerMock.Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(mockHttpResponse);
+
+            return handlerMock;
+        }
     }
 }

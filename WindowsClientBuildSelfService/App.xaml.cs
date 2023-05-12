@@ -12,6 +12,7 @@ using System.Windows;
 using WindowsClientBuildSelfService.Main;
 using WindowsClientBuildSelfService.PR.Models;
 using WindowsClientBuildSelfService.PR.Services;
+using WindowsClientBuildSelfService.Share.Messages;
 
 namespace WindowsClientBuildSelfService
 {
@@ -53,7 +54,6 @@ namespace WindowsClientBuildSelfService
         private static void RegisteService(IServiceCollection service)
         {
             service.AddSingleton<StartupWindowsView>();
-            service.AddScoped<StartupWindowsViewModel>();
             service.AddScoped<GitConfigData>();
             GitConfigData config = new();
             service.AddHttpClient<IPullRequestService, PullRequestService>(option =>
@@ -64,6 +64,7 @@ namespace WindowsClientBuildSelfService
                 option.DefaultRequestHeaders.Add("X-GitHub-Api-Version", config.ApiVersion);
                 option.DefaultRequestHeaders.Add("User-Agent", "SEPAL-Builds-Self-Service");
             });
+            service.AddTransient<IMessages, ShowMessageOnMessageBox>();
         }
 
         private static string protect(string unprotectData = "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")

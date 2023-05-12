@@ -9,19 +9,23 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using WindowsClientBuildSelfService.PR.Services;
+using WindowsClientBuildSelfService.Share.Messages;
 
 namespace WindowsClientBuildSelfService.PR.Models
 {
     public class Release : BindableBase
     {
+        private IMessages msgSender;
         private const string destinationPath = "C:/ProgramData/CypherCrescent/builds";
+        private readonly IPullRequestService gitRepo;
         public Release(int prNumber)
         {
+            gitRepo = App.serviceProvider.GetRequiredService<IPullRequestService>();
             DownloadPRRelease = new DelegateCommand(DownloadRelease, CanDownload);
             IsDownloadInProgress = false;
             PRNumber = prNumber;
+            msgSender= App.serviceProvider.GetRequiredService<IMessages>();
         }
         public string? DownloadReleaseUrl { get; set; }
         public int PRNumber { get; set; }
@@ -41,10 +45,15 @@ namespace WindowsClientBuildSelfService.PR.Models
         public DelegateCommand DownloadPRRelease { get; set; }
         public async void DownloadRelease()
         {
-            CreateDiretoryIfNotExist(destinationPath);
+            var result= CreateDiretoryIfNotExist(destinationPath);
+            if (!result.IsSuccess)
+            {
+                msgSender.ShowMessage(result.ReasonPhrase);
+                return;
+            }
             if (IsDownloadInProgress)
             {
-                MessageBox.Show(DownloadAlreadyRunning);
+                msgSender.ShowMessage(DownloadAlreadyRunning);
                 return;
             }
 
@@ -59,12 +68,22 @@ namespace WindowsClientBuildSelfService.PR.Models
             }
             catch (IOException)
             {
-                MessageBox.Show(ProjectAlreadyLaunch);
+                msgSender.ShowMessage(ProjectAlreadyLaunch);
+                return;
+            }
+            catch(Exception ex)
+            {
+                msgSender.ShowMessage(ex.Message);
                 return;
             }
             if (!CheckIfPRAlreadyExist())
             {
-                DeletFileIfExist(destinationPath);
+                result = DeletFileIfExist(destinationPath); ;
+                if (!result.IsSuccess)
+                {
+                    msgSender.ShowMessage(result.ReasonPhrase);
+                    return;
+                }
                 await DownloadFile();
             }
 
@@ -77,11 +96,10 @@ namespace WindowsClientBuildSelfService.PR.Models
         private async Task DownloadFile()
         {
             IsDownloadInProgress = true;
-            var gitRepo = App.serviceProvider.GetRequiredService<IPullRequestService>();
             var result = await gitRepo.DownloadRelease(DownloadReleaseUrl ?? "");
             if (!result.IsSuccess)
             {
-                MessageBox.Show(result.ReasonPhrase);
+                msgSender.ShowMessage(result.ReasonPhrase);
                 IsDownloadInProgress = false;
                 return;
             }
@@ -93,7 +111,7 @@ namespace WindowsClientBuildSelfService.PR.Models
             using var contentStream = await httpContent.ReadAsStreamAsync();
             var fullPath = Path.Join(destinationPath, PRNumber + DownloadReleaseUrl!.Split("/")[^1]);
             using var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None);
-            var buffer = new byte[40960];
+            var buffer = new byte[4096];
             var isMoreToRead = true;
 
             do
@@ -104,55 +122,104 @@ namespace WindowsClientBuildSelfService.PR.Models
                     isMoreToRead = false;
                     continue;
                 }
-                await fileStream.WriteAsync(buffer, 0, bytesRead);
+                try
+                {
+                    await fileStream.WriteAsync(buffer, 0, bytesRead);
+                }
+                catch (Exception ex)
+                {
+                    isMoreToRead = false;
+                    msgSender.ShowMessage(ex.Message);
+                    continue;
+                }
 
                 readBytes += bytesRead;
-                DownloadProgress = readBytes * 100 / totalBytes;
+                DownloadProgress = (readBytes * 100)/ totalBytes;
             }
             while (isMoreToRead);
             IsDownloadInProgress = false;
         }
-        private void CreateDiretoryIfNotExist(string path)
+        internal static ActionResult CreateDiretoryIfNotExist(string path)
         {
+            var result = new ActionResult();    
             if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(path);
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    result.AddError(UnauthorizedDirectoryMsg(path));
+                }
+                catch(Exception e)
+                {
+                    result.AddError($"{e.Message}");
+                }
             }
+            return result;
         }
-        private void DeletFileIfExist(string path)
+        public ActionResult DeletFileIfExist(string path)
         {
-
+            var result=new ActionResult();
             DirectoryInfo directory = new(path);
             IsDownloadInProgress = true;
             foreach (FileInfo file in directory.GetFiles())
             {
-                file.Delete();
+                try
+                {
+                    file.Delete();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    result.AddError(UnauthorizedFileMsg(file.FullName));
+                }
+                catch (Exception e)
+                {
+                    result.AddError($"{e.Message}");
+                }
             }
             foreach (DirectoryInfo dir in directory.GetDirectories())
             {
-                dir.Delete(true);
+                try
+                {
+                    dir.Delete(true);
+                }
+                catch (Exception e)
+                {
+                    result.AddError($"{e.Message}");
+                }
             }
             IsDownloadInProgress = false;
+            return result;
         }
         private static bool IsDownloadInProgress = false;
 
         private bool CheckIfPRAlreadyExist()
         {
-            var exeFile = new DirectoryInfo(destinationPath).GetFiles("*.exe").FirstOrDefault();
-            if (exeFile == null)
-                return false;
-            if (exeFile.Name != $"{PRNumber}{DownloadReleaseUrl!.Split("/")[^1]}")
-            {
-                return false;
-            }
             try
             {
-                Process.Start(exeFile.FullName);
-                return true;
+                var exeFile = new DirectoryInfo(destinationPath).GetFiles("*.exe").FirstOrDefault();
+                if (exeFile == null)
+                    return false;
+                if (exeFile.Name != $"{PRNumber}{DownloadReleaseUrl!.Split("/")[^1]}")
+                {
+                    return false;
+                }
+                try
+                {
+                    Process.Start(exeFile.FullName);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                msgSender.ShowMessage(e.Message);
+                return true;
             }
         }
     }

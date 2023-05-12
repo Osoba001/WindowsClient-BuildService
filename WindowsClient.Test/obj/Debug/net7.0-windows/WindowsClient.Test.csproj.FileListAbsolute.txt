@@ -347,3 +347,4 @@ C:\Users\DELL\Desktop\ccl\WindowsClient-BuildService\WindowsClient.Test\obj\Debu
 C:\Users\DELL\Desktop\ccl\WindowsClient-BuildService\WindowsClient.Test\obj\Debug\net7.0-windows\WindowsClient.Test.genruntimeconfig.cache
 C:\Users\DELL\Desktop\ccl\WindowsClient-BuildService\WindowsClient.Test\obj\Debug\net7.0-windows\ref\WindowsClient.Test.dll
 C:\Users\DELL\Desktop\ccl\WindowsClient-BuildService\WindowsClient.Test\bin\Debug\net7.0-windows\FluentAssertions.dll
+C:\Users\kelly.osoba\Desktop\APPs\CCLSelfService\WindowsClient-BuildService\WindowsClient.Test\bin\Debug\net7.0-windows\FluentAssertions.dll

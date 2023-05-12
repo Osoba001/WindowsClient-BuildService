@@ -11,7 +11,7 @@ namespace WindowsClientBuildSelfService.Main
         public StartupWindowsView()
         {
             InitializeComponent();
-            DataContext = App.serviceProvider.GetRequiredService<StartupWindowsViewModel>();
+            DataContext = new StartupWindowsViewModel();
         }
     }
 }

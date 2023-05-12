@@ -1,13 +1,11 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using WindowsClientBuildSelfService.PR.Models;
 using WindowsClientBuildSelfService.PR.Services;
+using WindowsClientBuildSelfService.Share.Messages;
 
 namespace WindowsClientBuildSelfService.Main
 {
@@ -19,16 +17,20 @@ namespace WindowsClientBuildSelfService.Main
         /// Initializes a new instance of the <see cref="StartupWindowViewModel"/> class with an instance of <see cref="IPullRequestService"/>.
         /// </summary>
         /// <param name="pullRequestService">The <see cref="IPullRequestService"/> instance to use for fetching the latest pull requests.</param>
-        public StartupWindowsViewModel(IPullRequestService pullRequestService)
+        private IMessages msgSender;
+ 
+        public StartupWindowsViewModel()
         {
-            this.pullRequestService = pullRequestService;
-            LatestPullRequest();
+            pullRequestService = App.serviceProvider.GetRequiredService<IPullRequestService>();
+            msgSender = App.serviceProvider.GetRequiredService<IMessages>();
+            LatestPullRequest().Await();
+
         }
 
         /// <summary>
         /// Fetches the latest pull requests for the "SEPAL-3.0" repository asynchronously.
         /// </summary>
-        private async void LatestPullRequest()
+        private async Task LatestPullRequest()
         {
             var result = await pullRequestService.GetPullRequests("SMBS");
             if (result.IsSuccess)
@@ -37,7 +39,7 @@ namespace WindowsClientBuildSelfService.Main
             }
             else
             {
-                MessageBox.Show(result.ReasonPhrase);
+                msgSender.ShowMessage(result.ReasonPhrase);
                 PullRequest = new ObservableCollection<PullRequest>();
             }
         }
