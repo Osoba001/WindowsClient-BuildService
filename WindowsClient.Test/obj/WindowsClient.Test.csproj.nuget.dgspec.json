@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj": {}
+    "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj": {
+    "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj",
+        "projectUniqueName": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj",
         "projectName": "WindowsClient.Test",
-        "projectPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj",
-        "packagesPath": "C:\\Users\\kelly.osoba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClient.Test\\obj\\",
+        "projectPath": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClient.Test\\WindowsClient.Test.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClient.Test\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kelly.osoba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.github.com/cyphercrescent/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0-windows7.0": {
             "targetAlias": "net7.0-windows",
             "projectReferences": {
-              "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
-                "projectPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj"
+              "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
+                "projectPath": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj"
               }
             }
           }
@@ -90,21 +89,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
+    "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
+        "projectUniqueName": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
         "projectName": "WindowsClientBuildSelfService",
-        "projectPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
-        "packagesPath": "C:\\Users\\kelly.osoba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kelly.osoba\\Desktop\\APPs\\CCLSelfService\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\obj\\",
+        "projectPath": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\WindowsClientBuildSelfService.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\Desktop\\ccl\\WindowsClient-BuildService\\WindowsClientBuildSelfService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kelly.osoba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -112,8 +111,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.github.com/cyphercrescent/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0-windows7.0": {
@@ -163,7 +161,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

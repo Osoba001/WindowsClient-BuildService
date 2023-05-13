@@ -67,7 +67,7 @@ namespace WindowsClientBuildSelfService
             service.AddTransient<IMessages, ShowMessageOnMessageBox>();
         }
 
-        private static string protect(string unprotectData = "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")
+        private static string protect(string unprotectData)
         {
             byte[] entropy = Encoding.ASCII.GetBytes(Assembly.GetExecutingAssembly().FullName);
             byte[] data = Encoding.ASCII.GetBytes(unprotectData);

@@ -22,10 +22,10 @@ namespace WindowsClientBuildSelfService.PR.Models
         public Release(int prNumber)
         {
             gitRepo = App.serviceProvider.GetRequiredService<IPullRequestService>();
+            msgSender= App.serviceProvider.GetRequiredService<IMessages>();
             DownloadPRRelease = new DelegateCommand(DownloadRelease, CanDownload);
             IsDownloadInProgress = false;
             PRNumber = prNumber;
-            msgSender= App.serviceProvider.GetRequiredService<IMessages>();
         }
         public string? DownloadReleaseUrl { get; set; }
         public int PRNumber { get; set; }
@@ -99,8 +99,8 @@ namespace WindowsClientBuildSelfService.PR.Models
             var result = await gitRepo.DownloadRelease(DownloadReleaseUrl ?? "");
             if (!result.IsSuccess)
             {
-                msgSender.ShowMessage(result.ReasonPhrase);
                 IsDownloadInProgress = false;
+                msgSender.ShowMessage(result.ReasonPhrase);
                 return;
             }
             var httpContent = result.Data as HttpContent;
